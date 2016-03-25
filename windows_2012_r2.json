@@ -6,7 +6,7 @@
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": true,
+      "headless": false,
       "boot_wait": "2m",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
@@ -73,9 +73,6 @@
   ],
   "provisioners": [
     {
-      "type": "windows-restart"
-    },
-    {
       "type": "windows-shell",
       "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
       "scripts": [
@@ -89,9 +86,10 @@
   ],
   "post-processors": [
     {
-      "type": "compress",
+      "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "windows_2012_r2_{{.Provider}}.zip"
+      "output": "windows_2012_r2_{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows_2012_r2.template"
     }
   ],
   "variables": {
